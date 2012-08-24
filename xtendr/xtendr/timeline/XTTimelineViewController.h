@@ -17,4 +17,6 @@
 
 @property(assign, nonatomic) NSInteger		timelineMode;
 
+-(void)loadNewerPosts;
+
 @end

@@ -156,7 +156,12 @@ NSString *kANAPIClientID	= @"zkQLXuAgUa2SF8Ws3G6SVhdHtsyTkq3x";
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-	// Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+	if([((UINavigationController *)self.viewDeck.centerController).viewControllers[0] respondsToSelector:@selector(loadNewerPosts)])
+	{
+		XTTimelineViewController *controller = ((UINavigationController *)self.viewDeck.centerController).viewControllers[0];
+		
+		[controller loadNewerPosts];
+	}
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -359,6 +364,8 @@ NSString *kANAPIClientID	= @"zkQLXuAgUa2SF8Ws3G6SVhdHtsyTkq3x";
 	{
 		self.viewDeck.enabled = YES;
 
+		// TODO: Save last viewed page and save to userdefaults? Upon fresh launch, app would then switch to last viewed page
+		//	instead of always bringing up timeline. Could be controlled by settings for behaviour. Thoughts?
 		[self switchToMyTimelineView];
 
 		//set up HTTP header for Auth
