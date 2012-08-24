@@ -17,6 +17,7 @@
 #import "XTProfileViewController.h"
 #import "XTPostController.h"
 
+#import "NSString+Extentions.h"
 
 #define kResultsTypePosts		(0)
 #define kResultsTypeUsers		(1)
@@ -336,7 +337,13 @@
 
 - (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope
 {
-	[self searchBarSearchButtonClicked:searchBar];
+	if(searchBar.text != nil)					// Is nil when the screen first loads up, so switching to other searches will cause a crash.
+	{
+		if(![searchBar.text isEmpty])		// Saving a network call if the user just entered blank spaces. Should the text trim leading spaces to or just let the user try to search on that?
+		{
+			[self searchBarSearchButtonClicked:searchBar];
+		}
+	}
 }
 
 @end
